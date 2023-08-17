@@ -7,6 +7,7 @@ import repository.PersonRepository;
 
 import javax.annotation.PostConstruct;
 import java.util.Arrays;
+//jopa
 
 
 @Configuration

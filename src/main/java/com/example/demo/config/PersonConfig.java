@@ -1,13 +1,13 @@
-package config;
+package com.example.demo.config;
 
-import model.PersonModel;
+import com.example.demo.model.PersonModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import repository.PersonRepository;
+import com.example.demo.repository.PersonRepository;
 
 import javax.annotation.PostConstruct;
 import java.util.Arrays;
-//jopa
+
 
 
 @Configuration

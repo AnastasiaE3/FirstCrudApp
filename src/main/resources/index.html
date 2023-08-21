@@ -1,0 +1,72 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD App</title>
+
+<script
+        src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+        crossorigin="anonymous"></script>
+<script>
+
+
+class Person {
+        constructor(id, firstName, lastName) {
+            this.id = id;
+            this.firstName = firstName;
+            this.lastName = lastName;
+        }
+    }
+
+    function create(event) {
+        event.preventDefault(); // Prevent the form from submitting and refreshing the page
+
+        // Get the values from the input fields
+        const personIdValue = $("#person-id").val();
+        const firstNameValue = $("#first-name").val();
+        const lastNameValue = $("#last-name").val();
+
+        // Create a Person object
+        const person = new Person(personIdValue, firstNameValue, lastNameValue);
+
+        // Convert the object to JSON
+        const personData = JSON.stringify(person);
+
+        $.ajax({
+            type: "POST",
+            crossDomain: true,
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            url: "/person-controller/create",
+            data: personData,
+            dataType: "json", // Use lowercase "json"
+            success: function (response) {
+                alert(JSON.stringify(response));
+            },
+            error: function (request, status, error) {
+                console.log("Error while processing request");
+                console.log("Request value ↓");
+                console.log(request);
+                console.log("Status value ↓");
+                console.log(status);
+                console.log("Error value ↓");
+                console.log(error);
+            }
+        });
+    }
+</script>
+
+</head>
+<body>
+    <form>
+        <input id="person-id" placeholder="ID"><br>
+        <input id="first-name" placeholder="First Name"><br>
+        <input id="last-name" placeholder="Last Name"><br>
+        <button onclick="create(event)">Create</button>
+        <!-- Add other CRUD operation buttons here -->
+    </form>
+</body>
+</html>

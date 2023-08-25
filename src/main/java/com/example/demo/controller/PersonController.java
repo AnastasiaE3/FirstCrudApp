@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
+// main part to talk about
+
 @Controller
 public class PersonController {
     private PersonSevice service;
@@ -48,7 +51,7 @@ public class PersonController {
     }
 }
 
-// main part to talk about
+
 
 
 

@@ -57,6 +57,33 @@ class Person {
             }
         });
     }
+
+    function read(event) {
+            event.preventDefault(); // Prevent the form from submitting and refreshing the page
+
+            $.ajax({
+                type: "GET",
+                crossDomain: true,
+                headers: {
+                    'Accept': 'application/json',
+                },
+                url: "/person-controller/read",
+                success: function (response) {
+                    alert(JSON.stringify(response));
+                },
+                error: function (request, status, error) {
+                    console.log("Error while processing request");
+                    console.log("Request value ↓");
+                    console.log(request);
+                    console.log("Status value ↓");
+                    console.log(status);
+                    console.log("Error value ↓");
+                    console.log(error);
+                }
+            });
+        }
+
+
 </script>
 
 </head>
@@ -67,6 +94,7 @@ class Person {
         <input id="last-name" placeholder="Last Name"><br>
         <button onclick="create(event)">Create</button>
         <!-- Add other CRUD operation buttons here -->
+        <button onclick="read(event)">Read</button>
     </form>
 </body>
 </html>

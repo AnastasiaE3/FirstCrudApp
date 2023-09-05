@@ -13,7 +13,7 @@ import java.util.List;
 
 
 
-
+// main part to talk about
 @Controller
 public class PersonController {
     private PersonSevice service;
@@ -50,7 +50,7 @@ public class PersonController {
         return new ResponseEntity<>(service.deleteById(id), HttpStatus.OK);
     }
 }
-// main part to talk about
+
 
 
 

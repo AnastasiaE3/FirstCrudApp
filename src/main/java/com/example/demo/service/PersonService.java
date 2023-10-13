@@ -10,6 +10,7 @@ import java.util.List;
 
 @Service
 public class PersonService {
+
     private PersonRepository repository;
 
     @Autowired
@@ -25,13 +26,6 @@ public class PersonService {
         return repository.findById(id).get();
     }
 
-    public List<PersonModel> readAll() {
-        Iterable<PersonModel> allPeople = repository.findAll();
-        List<PersonModel> personList = new ArrayList<>();
-        allPeople.forEach(personList::add);
-        return personList;
-    }
-
     public PersonModel update(Long id, PersonModel newPersonData) {
         PersonModel personInDatabase = this.readById(id);
         personInDatabase.setFirstName(newPersonData.getFirstName());
@@ -45,5 +39,12 @@ public class PersonService {
         PersonModel personToBeDeleted = this.readById(id);
         repository.delete(personToBeDeleted);
         return personToBeDeleted;
+    }
+
+    public List<PersonModel> readAll() {
+        Iterable<PersonModel> allPeople = repository.findAll();
+        List<PersonModel> personList = new ArrayList<>();
+        allPeople.forEach(personList::add);
+        return personList;
     }
 }

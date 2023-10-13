@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 import com.example.demo.model.PersonModel;
-import com.example.demo.service.PersonSevice;
+import com.example.demo.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +16,10 @@ import java.util.List;
 // main part to talk about
 @Controller
 public class PersonController {
-    private PersonSevice service;
+    private PersonService service;
 
 @Autowired
-    public PersonController(PersonSevice service) {
+    public PersonController(PersonService service) {
     this.service = service;
 }
 

@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class PersonSevice {
+public class PersonService {
     private PersonRepository repository;
 
     @Autowired
-    public PersonSevice (PersonRepository repository) {
+    public PersonService (PersonRepository repository) {
         this.repository = repository;
     }
 

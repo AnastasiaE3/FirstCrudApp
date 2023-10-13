@@ -8,179 +8,147 @@
         src="https://code.jquery.com/jquery-3.4.1.js"
         integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
         crossorigin="anonymous"></script>
+    </head>
 <script>
 
 
 class Person {
-        constructor(id, firstName, lastName) {
+        constructor(id, firstName, lastName, birthDate) {
             this.id = id;
             this.firstName = firstName;
             this.lastName = lastName;
+            this.birthDate;
         }
     }
 
-    function create(event) {
-        event.preventDefault(); // Prevent the form from submitting and refreshing the page
+        function create(event) {
+            // Get the new person's data from the input fields
+            var firstName = document.getElementById("firstName").value;
+            var lastName = document.getElementById("lastName").value;
+            var birthDate = document.getElementById("birthDate").value;
 
-        // Get the values from the input fields
-        const personIdValue = $("#person-id").val();
-        const firstNameValue = $("#first-name").val();
-        const lastNameValue = $("#last-name").val();
+            // Create an object with the new person's data
+            var newPersonData = {
+                "firstName": firstName,
+                "lastName": lastName,
+                "birthDate": birthDate
+            };
 
-        // Create a Person object
-        const person = new Person(personIdValue, firstNameValue, lastNameValue);
+            // Make an AJAX POST request to the backend endpoint
+            $.ajax({
+                type: "POST",
+                contentType: "application/json",
+                url: "/create",
+                data: JSON.stringify(newPersonData),
+                success: function (data, status, xhr) {
+                    // Display a success message in the result div
+                    var resultDiv = document.getElementById("result");
+                    resultDiv.innerHTML = "<h2>Created Person Data</h2>" +
+                        "<p>ID: " + data.id + "</p>" +
+                        "<p>First Name: " + data.firstName + "</p>" +
+                        "<p>Last Name: " + data.lastName + "</p>" +
+                        "<p>Birth Date: " + data.birthDate + "</p>";
 
-        // Convert the object to JSON
-        const personData = JSON.stringify(person);
-
-        $.ajax({
-            type: "POST",
-            crossDomain: true,
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            url: "/person-controller/create",
-            data: personData,
-            dataType: "json", // Use lowercase "json"
-            success: function (response) {
-                alert(JSON.stringify(response));
-            },
-            error: function (request, status, error) {
-                console.log("Error while processing request");
-                console.log("Request value ↓");
-                console.log(request);
-                console.log("Status value ↓");
-                console.log(status);
-                console.log("Error value ↓");
-                console.log(error);
-            }
+                    // Optionally, you can extract the new person's ID from the response headers
+                    var newPersonId = xhr.getResponseHeader("Location");
+                    if (newPersonId) {
+                        resultDiv.innerHTML += "<p>New Person ID: " + newPersonId + "</p>";
+                    }
+                }
         });
     }
 
-    function read(event) {
-            event.preventDefault(); // Prevent the form from submitting and refreshing the page
+        function read(event) {
+            // Get the ID from the input field
+            var id = document.getElementById("personId").value;
 
+            // Make an AJAX GET request to the backend endpoint
             $.ajax({
                 type: "GET",
-                crossDomain: true,
-                headers: {
-                    'Accept': 'application/json',
-                },
-                url: "/person-controller/read",
-                success: function (response) {
-                    alert(JSON.stringify(response));
-                },
-                error: function (request, status, error) {
-                    console.log("Error while processing request");
-                    console.log("Request value ↓");
-                    console.log(request);
-                    console.log("Status value ↓");
-                    console.log(status);
-                    console.log("Error value ↓");
-                    console.log(error);
+                url: "/read/{id}" + id,
+                success: function (data) {
+                    // Display the data in the result div
+                    var resultDiv = document.getElementById("result");
+                    resultDiv.innerHTML = "<h2>Person Data</h2>" +
+                        "<p>ID: " + data.id + "</p>" +
+                        "<p>Name: " + data.name + "</p>" +
+                        "<p>Age: " + data.age + "</p>";
                 }
             });
         }
 
         function readAll(event) {
-            event.preventDefault(); // Prevent the form from submitting and refreshing the page
-
+            // Make an AJAX GET request to the backend endpoint
             $.ajax({
                 type: "GET",
-                crossDomain: true,
-                headers: {
-                    'Accept': 'application/json',
-                },
-                url: "/person-controller/readAll",
-                success: function (response) {
-                    alert(JSON.stringify(response));
-                },
-                error: function (request, status, error) {
-                    console.log("Error while processing request");
-                    console.log("Request value ↓");
-                    console.log(request);
-                    console.log("Status value ↓");
-                    console.log(status);
-                    console.log("Error value ↓");
-                    console.log(error);
+                url: "/readAll",
+                success: function (data) {
+                    // Display the data in the result div
+                    var resultDiv = document.getElementById("result");
+                    resultDiv.innerHTML = "<h2>Person Data</h2>";
+                    
+                    // Loop through the data and display each person's information
+                    for (var i = 0; i < data.length; i++) {
+                        resultDiv.innerHTML += "<p>ID: " + data[i].id + "</p>" +
+                            "<p>Name: " + data[i].name + "</p>" +
+                            "<p>Age: " + data[i].age + "</p><hr>";
+                    }
                 }
             });
         }
 
         function update(event) {
-            event.preventDefault(); // Prevent the form from submitting and refreshing the page
+            // Get the ID, new first name, new last name, and new birth date from the input fields
+            var id = document.getElementById("updateId").value;
+            var newFirstName = document.getElementById("updateFirstName").value;
+            var newLastName = document.getElementById("updateLastName").value;
+            var newBirthDate = document.getElementById("updateBirthDate").value;
 
-            // Get the values from the input fields
-            const personIdValue = $("#person-id").val();
-            const firstNameValue = $("#first-name").val();
-            const lastNameValue = $("#last-name").val();
+            // Create an object with the updated data
+            var updatedData = {
+                "firstName": newFirstName,
+                "lastName": newLastName,
+                "birthDate": newBirthDate
+            };
 
-            // Create a Person object
-            const person = new Person(personIdValue, firstNameValue, lastNameValue);
-
-            // Convert the object to JSON
-            const personData = JSON.stringify(person);
-
-            // Replace '1' with the actual ID you want to update
-            const updateId = 1;
-
+            // Make an AJAX PUT request to the backend endpoint
             $.ajax({
                 type: "PUT",
-                crossDomain: true,
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                url: `/person-controller/update/${updateId}`,
-                data: personData,
-                dataType: "json", // Use lowercase "json"
-                success: function (response) {
-                    alert(JSON.stringify(response));
-                },
-                error: function (request, status, error) {
-                    console.log("Error while processing request");
-                    console.log("Request value ↓");
-                    console.log(request);
-                    console.log("Status value ↓");
-                    console.log(status);
-                    console.log("Error value ↓");
-                    console.log(error);
+                contentType: "application/json",
+                url: "/update/{id}" + id,
+                data: JSON.stringify(updatedData),
+                success: function (data) {
+                    // Display the updated person's data in the result div
+                    var resultDiv = document.getElementById("result");
+                    resultDiv.innerHTML = "<h2>Updated Person Data</h2>" +
+                        "<p>ID: " + data.id + "</p>" +
+                        "<p>First Name: " + data.firstName + "</p>" +
+                        "<p>Last Name: " + data.lastName + "</p>" +
+                        "<p>Birth Date: " + data.birthDate + "</p>";
                 }
+
             });
         }
 
         function deleteById(event) {
-            event.preventDefault(); // Prevent the form from submitting and refreshing the page
+            // Get the ID to be deleted from the input field
+            var id = document.getElementById("deleteId").value;
 
-            // Replace '1' with the actual ID you want to delete
-            const deleteId = 1;
-
+            // Make an AJAX DELETE request to the backend endpoint
             $.ajax({
                 type: "DELETE",
-                crossDomain: true,
-                headers: {
-                    'Accept': 'application/json',
-                },
-                url: `/person-controller/delete/${deleteId}`,
-                success: function (response) {
-                    alert(JSON.stringify(response));
-                },
-                error: function (request, status, error) {
-                    console.log("Error while processing request");
-                    console.log("Request value ↓");
-                    console.log(request);
-                    console.log("Status value ↓");
-                    console.log(status);
-                    console.log("Error value ↓");
-                    console.log(error);
+                url: "/delete/{id}" + id,
+                success: function () {
+                    // Display a success message in the result div
+                    var resultDiv = document.getElementById("result");
+                    resultDiv.innerHTML = "<p>Person with ID " + id + " has been deleted.</p>";
                 }
             });
         }
 
 </script>
 
-</head>
+
 <body>
     <form>
         <input id="person-id" placeholder="ID"><br>
@@ -192,7 +160,7 @@ class Person {
         <button onclick="read(event)">Read</button>
         <button onclick="readAll(event)">ReadAll</button>
         <button onclick="update(event)">Update</button>
-        <button onclick="delete(event)">Delete</button>
+        <button onclick="deleteById(event)">Delete</button>
         
     </form>
 </body>

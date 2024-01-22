@@ -14,7 +14,7 @@ import java.util.List;
 
 
 
-// main part to talk about
+// main part to talk about.
 @CrossOrigin(origins = "*")
 @Controller
 public class PersonController {

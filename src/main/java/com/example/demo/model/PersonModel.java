@@ -10,8 +10,8 @@ import java.util.Date;
 
 @Entity
 public class PersonModel {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id // sets something as a primary key
+    @GeneratedValue(strategy = GenerationType.AUTO) // sets it as auto increment
     private long id;
 
     private String firstName;
@@ -19,7 +19,7 @@ public class PersonModel {
     private Date birthDate;
 
     public PersonModel() {
-
+        // spring boot needs this as a default constructor
     }
 
     public PersonModel(long id, String firstName,String lastName, Date birthDate) {

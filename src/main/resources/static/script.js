@@ -15,9 +15,9 @@ class Person {
         // get the values that are in the input fields
         const id = document.getElementById("person-id").value;
         const firstName = document.getElementById("first-name").value;
-        const lastNamet = document.getElementById("last-name").value;
+        const lastName = document.getElementById("last-name").value;
 
-        const person = new Person(id, firstName, lastNamet);
+        const person = new Person(id, firstName, lastName);
 
         // call the create function of the spring boot app with the values
         const personData = JSON.stringify(person);
@@ -96,9 +96,9 @@ class Person {
         // get the values that are in the input fields
         const id = document.getElementById("person-id").value;
         const firstName = document.getElementById("first-name").value;
-        const lastNamet = document.getElementById("last-name").value;
+        const lastName = document.getElementById("last-name").value;
 
-        const person = new Person(id, firstName, lastNamet);
+        const person = new Person(id, firstName, lastName);
 
         // call the create function of the spring boot app with the values
         const personData = JSON.stringify(person);
@@ -129,7 +129,7 @@ class Person {
         const id = document.getElementById("person-id").value;
         
         $.ajax({
-            type: "DELETET",
+            type: "DELETE",
             crossDomain: true,
             headers: {
                 'Accept':'application/json',

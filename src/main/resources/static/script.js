@@ -6,21 +6,22 @@ class Person {
         }
     }
 
-    function create() {
-        // get the values that are in the input fields
-        const personIdElement = document.getElementById("person-id");
-        const firstNameElement = document.getElementById("first-name");
-        const lastNameElement = document.getElementById("last-name");
+    function updateDisplay(response) {
+        document.getElementById("output").innerText = JSON.stringify(response)
+    }
 
-        const personIdValue = personIdElement.value;
-        const firstNameValue = firstNameElement.value;
-        const lastNameValue = lastNameElement.value;
-        const person = new Person(personIdValue, firstNameValue, lastNameValue);
+    function create(event) {
+        event.preventDefault();
+        // get the values that are in the input fields
+        const id = document.getElementById("person-id").value;
+        const firstName = document.getElementById("first-name").value;
+        const lastNamet = document.getElementById("last-name").value;
+
+        const person = new Person(id, firstName, lastNamet);
 
         // call the create function of the spring boot app with the values
         const personData = JSON.stringify(person);
-        console.log(personData);
-
+        
         $.ajax({
             type: "POST",
             crossDomain: true,
@@ -33,16 +34,116 @@ class Person {
             data: personData,
             dataType: "JSON",
             success: function(response) {
-                alert(JSON.stringify(response));
+                updateDisplay(response);
             },
-            error: function(request, status, error) {
-                console.log("Error while digesting request")
-                console.log("Request value ↓")
-                console.log(request)
-                console.log("Status value ↓")
-                console.log(status);
-                console.log("Error value ↓")
-                console.log(error);
+            error: function(response) {
+                updateDisplay(response);
+            }
+        });
+    }
+
+    function read(event) {
+        event.preventDefault();
+        
+        const id = document.getElementById("person-id").value;
+        
+        
+        $.ajax({
+            type: "GET",
+            crossDomain: true,
+            headers: {
+                'Accept':'application/json',
+                'Content-Type':'application/json',
+                'Access-Control-Allow-Origin': '*'
+            },
+            url: "/person-controller/read/".concat(id),
+            
+            dataType: "JSON",
+            success: function(response) {
+               updateDisplay(response);
+            },
+            error: function(response) {
+                updateDisplay(response);
+            }
+        });
+    }
+
+    function readAll(event) {
+        event.preventDefault();
+        
+        $.ajax({
+            type: "GET",
+            crossDomain: true,
+            headers: {
+                'Accept':'application/json',
+                'Content-Type':'application/json',
+                'Access-Control-Allow-Origin': '*'
+            },
+            url: "/person-controller/read-all",
+            
+            dataType: "JSON",
+            success: function(response) {
+                updateDisplay(response);
+            },
+            error: function(response) {
+                updateDisplay(response);
+            }
+        });
+    }
+
+    function update(event) {
+        event.preventDefault();
+        // get the values that are in the input fields
+        const id = document.getElementById("person-id").value;
+        const firstName = document.getElementById("first-name").value;
+        const lastNamet = document.getElementById("last-name").value;
+
+        const person = new Person(id, firstName, lastNamet);
+
+        // call the create function of the spring boot app with the values
+        const personData = JSON.stringify(person);
+        
+        $.ajax({
+            type: "PUT",
+            crossDomain: true,
+            headers: {
+                'Accept':'application/json',
+                'Content-Type':'application/json',
+                'Access-Control-Allow-Origin': '*'
+            },
+            url: "/person-controller/update/".concat(id),
+            data: personData,
+            dataType: "JSON",
+            success: function(response) {
+                updateDisplay(response);
+            },
+            error: function(response) {
+                updateDisplay(response);
+            }
+        });
+    }
+
+    function destroy(event) {
+        event.preventDefault();
+       
+        const id = document.getElementById("person-id").value;
+        
+        $.ajax({
+            type: "DELETET",
+            crossDomain: true,
+            headers: {
+                'Accept':'application/json',
+                'Content-Type':'application/json',
+                'Access-Control-Allow-Origin': '*'
+            },
+            url: "/person-controller/delete/".concat(id),
+            
+            dataType: "JSON",
+            success: function(response) {
+                updateDisplay(response);
+            },
+            error: function(response) {
+                updateDisplay(response);
             }
         });
     }

@@ -8,7 +8,7 @@ import javax.annotation.PostConstruct;
 import java.util.Arrays;
 
 
-
+// able to add database and
 @Configuration
 public class PersonConfig {
     @Autowired

@@ -15,7 +15,7 @@ import java.util.List;
 
 
 // main part to talk about.
-@CrossOrigin(origins = "*")
+
 @Controller
 public class PersonController {
     private PersonService service;

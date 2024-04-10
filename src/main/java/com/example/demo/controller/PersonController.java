@@ -13,10 +13,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
-
-// main part to talk about.
-
 @Controller
+@CrossOrigin(origins = "*")
+@RequestMapping(value = "/person-controller")
 public class PersonController {
     private PersonService service;
 

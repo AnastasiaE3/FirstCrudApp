@@ -1,8 +1,9 @@
 class Person {
-        constructor(id, firstName, lastName) {
+        constructor(id, firstName, lastName, birthDate) {
             this.id = id;
             this.firstName = firstName;
             this.lastName = lastName;
+            this.birthDate = birthDate;
         }
     }
 
@@ -14,10 +15,11 @@ class Person {
         event.preventDefault();
         // get the values that are in the input fields
         const id = document.getElementById("person-id").value;
-        const firstName = document.getElementById("first-name").value;
-        const lastName = document.getElementById("last-name").value;
+        const firstName = document.getElementById("fname").value;
+        const lastName = document.getElementById("lname").value;
+        const birthDate = document.getElementById("birthDate").value;
 
-        const person = new Person(id, firstName, lastName);
+        const person = new Person(id, firstName, lastName, birthDate);
 
         // call the create function of the spring boot app with the values
         const personData = JSON.stringify(person);
@@ -79,7 +81,7 @@ class Person {
                 'Content-Type':'application/json',
                 'Access-Control-Allow-Origin': '*'
             },
-            url: "/person-controller/read-all",
+            url: "/person-controller/readAll",
             
             dataType: "JSON",
             success: function(response) {
@@ -95,10 +97,12 @@ class Person {
         event.preventDefault();
         // get the values that are in the input fields
         const id = document.getElementById("person-id").value;
-        const firstName = document.getElementById("first-name").value;
-        const lastName = document.getElementById("last-name").value;
+        const firstName = document.getElementById("fname").value;
+        const lastName = document.getElementById("lname").value;
+        const birthDate = document.getElementById("birthDate").value;
 
-        const person = new Person(id, firstName, lastName);
+
+        const person = new Person(id, firstName, lastName, birthDate);
 
         // call the create function of the spring boot app with the values
         const personData = JSON.stringify(person);

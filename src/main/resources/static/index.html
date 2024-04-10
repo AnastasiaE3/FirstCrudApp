@@ -1,29 +1,25 @@
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRUD App </title>
-
 <script
         src="https://code.jquery.com/jquery-3.4.1.js"
         integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
         crossorigin="anonymous"></script>
-    </head>
+<script src="./script.js"></script>
 
-<body>
-    <form>
-        <input id="personId" placeholder="ID"><br>
-        <input id="firstName" placeholder="First Name"><br>
-        <input id="lastName" placeholder="Last Name"><br>
-        <input id="birthDate" placeholder="Birth Date"><br>
+
+
+<form>
+        <input id="person-id">- Enter ID<br>
+        <input id="fname">- Enter First Name<br>
+        <input id="lname">- Enter Last Name<br>
+        <input id="birthDate">- Enter Birth Date<br>
+
         <button onclick="create(event)">Create</button>
-        <!-- Add other CRUD operation buttons here -->
-        
-        <button onclick="read(event)">Read</button>
-        <button onclick="readAll(event)">ReadAll</button>
+        <button onclick="read(event)">Read By Id</button>
+        <button onclick="readAll(event)">Read All</button>
         <button onclick="update(event)">Update</button>
-        <button onclick="destroyById(event)">Delete</button>
+        <button onclick="destroy(event)">Delete</button>
         
-    </form>
-</body>
-</html>
+</form>
+
+    <div id="output"></div>
+
+
